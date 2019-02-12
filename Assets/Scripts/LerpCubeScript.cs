@@ -24,8 +24,20 @@ public class LerpCubeScript : MonoBehaviour {
         {
             t += Time.deltaTime;
             Debug.Log(t);
-            cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
-            if(t >=1)
+            //cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
+
+            //cube.transform.position = _leftPosition + (_rightPosition - _leftPosition) * t; // 1
+
+            //cube.transform.position = _leftPosition + (_rightPosition - _leftPosition) * t * t * t; //2
+
+            //cube.transform.position = _leftPosition + (_rightPosition - _leftPosition) * (1 - (1 - t) * (1 - t) * (1 - t)); // 3 
+
+            Vector3 a = _leftPosition + (_rightPosition - _leftPosition) * t * t;
+            Vector3 b = _leftPosition + (_rightPosition - _leftPosition) * (1 - (1 - t) * (1 - t));
+
+            cube.transform.position = a + (b - a) * t; // 4
+
+            if (t >=1)
             {
                 cube.transform.position = _rightPosition;
             }
